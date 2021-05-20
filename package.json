@@ -1,0 +1,39 @@
+{
+  "name": "boostedboard-payment",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.22.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-import": "^1.7.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "card-validator": "^6.2.0",
+    "core-js": "^3.2.1",
+    "countrycitystatejson": "^0.2.12",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
+    "libphonenumber-js": "^1.7.23",
+    "mobx": "^4.2.1",
+    "mobx-react": "^5.1.2",
+    "node-sass": "^4.12.0",
+    "react": "^16.4.2",
+    "react-app-rewired": "^1.5.2",
+    "react-dom": "^16.4.2",
+    "react-image-webp": "^0.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "sass": "^1.22.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "scss": "node-sass --watch src/sass -o src/css"
+  },
+  "devDependencies": {}
+}
