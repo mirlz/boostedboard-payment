@@ -1,6 +1,6 @@
 import React from 'react';   
 import { Form, Row, Col, Collapse, Icon } from 'antd';
-import {observer} from 'mobx-react';
+import {observer} from 'mobx-react-lite';
 import CommonStore from '../../stores/CommonStore';
 import ProductListStore from '../../stores/ProductListStore';
 import LogoHeader from '../../components/LogoHeader';

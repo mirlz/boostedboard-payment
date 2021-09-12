@@ -1,5 +1,5 @@
 import React from 'react';   
-import {observer} from 'mobx-react';
+import {observer} from 'mobx-react-lite';
 import Image from 'react-image-webp';
 import { Link } from 'react-router-dom';
 

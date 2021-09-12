@@ -1,5 +1,5 @@
 import React from 'react';   
-import {observer} from 'mobx-react';
+import {observer} from 'mobx-react-lite';
 import { Row, List, Radio, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import ContactInformationStore from '../stores/ContactInformationStore';

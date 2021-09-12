@@ -77,7 +77,7 @@ autorun(() => {
     handleStateList(ContactInformationStore.ob.saveData.country)
 });
 
-const verifyZipCode = (cZip, cState, cCountry) => {
+const verifyZipCode = action((cZip, cState, cCountry) => {
     let states = ob.countries[cCountry]['states'];
     let status = false;
 
@@ -99,9 +99,9 @@ const verifyZipCode = (cZip, cState, cCountry) => {
 
     ob.verifiedZipCode = status;
     return status;
-}
+});
 
-const handleStateChange = (cState, cCountry) => {
+const handleStateChange = action((cState, cCountry) => {
     let states = ob.countries[cCountry]['states'];
 
     states.forEach((stateObj, key) => {
@@ -120,12 +120,17 @@ const handleStateChange = (cState, cCountry) => {
             });
         }
     });
-}
+});
+
+const handleStateSelectChange = action((val) => {
+    ob.onStateSelectChange = val;
+});
 
 var CountriesStatesStore = { 
     handleStateList,
     verifyZipCode,
     handleStateChange,
+    handleStateSelectChange,
     ob
 };
 

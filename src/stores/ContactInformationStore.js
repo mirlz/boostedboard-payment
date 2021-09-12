@@ -45,6 +45,12 @@ const setCheckSubscribe = action((flag) => {
     ob.saveData.checkSubscribe = flag;
 });
 
+const setSaveData = action((key, val) => {
+    if(key in ob.saveData) {
+        ob.saveData[key] = val;
+    }
+})
+
 const resetFields = action(() => {
     ob.saveData.email = '';
     ob.saveData.checkSubscribe = false;
@@ -78,6 +84,7 @@ var ContactInformationStore = {
     setProceedToShipping,
     setCheckSubscribe,
     resetFields,
+    setSaveData
 };
 
 export default ContactInformationStore;

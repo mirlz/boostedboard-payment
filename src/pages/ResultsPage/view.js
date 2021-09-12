@@ -1,7 +1,7 @@
 import React from 'react';   
 import { Result, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import {observer} from 'mobx-react';
+import {observer} from 'mobx-react-lite';
 import ContactInformationStore from '../../stores/ContactInformationStore';
 import ProductListStore from '../../stores/ProductListStore';
 import PaymentStore from '../../stores/PaymentStore';

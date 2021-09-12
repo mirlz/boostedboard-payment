@@ -1,5 +1,5 @@
 import React from 'react';   
-import {observer} from 'mobx-react';
+import {observer} from 'mobx-react-lite';
 import CommonStore from '../stores/CommonStore';
 import { Row, Col } from 'antd';
 import ProductListStore from '../stores/ProductListStore';

@@ -1,11 +1,10 @@
 import React from 'react';   
-import {observer} from 'mobx-react';
-import { Redirect } from 'react-router-dom';
+import {observer} from 'mobx-react-lite';
+import { useHistory } from 'react-router-dom';
 import ContactInformationStore from '../stores/ContactInformationStore';
 import CountriesStatesStore from '../stores/CountriesStatesStore';
 import { Row, Col, Form, Input, Checkbox, Button } from 'antd';
 import ContactForm from './ContactForm';
-import ProductList from './ProductList';
 import ProductListStore from '../stores/ProductListStore';
 
 const FormItem = Form.Item;
@@ -33,11 +32,9 @@ const ContactInformation = observer((props) => {
                 console.log('Received values of form: ', values);
                 const formValues = values['contact'];
                 Object.keys(formValues).map((key) => {
-                    if(key in ContactInformationStore.ob.saveData) {
-                        ContactInformationStore.ob.saveData[key] = formValues[key];
-                    }
+                    ContactInformationStore.setSaveData(key, formValues[key]);
                 });
-                ContactInformationStore.ob.saveData.countryName = countryData[formValues['country']].name;
+                ContactInformationStore.setSaveData('countryName', countryData[formValues['country']].name);
                 let finalAdd ='';
                 
                 if((formValues['company'].trim()).length >0) {
@@ -51,7 +48,7 @@ const ContactInformation = observer((props) => {
                 finalAdd += formValues['zipcode'] + ', ';
                 finalAdd += ContactInformationStore.ob.saveData.countryName;
 
-                ContactInformationStore.ob.saveData.finalAddress = finalAdd;
+                ContactInformationStore.setSaveData('finalAddress', finalAdd);
 
                 ContactInformationStore.setProceedToShipping();
             }
@@ -64,14 +61,17 @@ const ContactInformation = observer((props) => {
             },
         });
         console.log(ContactInformationStore.ob.saveData)
-    }
+    };
 
     const moveToNextPage = () => {
+        let history = useHistory();
+
         if(ContactInformationStore.ob.proceedToShipping) {
             ContactInformationStore.setProceedToShipping();
-            return <Redirect to='/shipping' />
+            console.log('redirect to /shipping')
+            history.push("/shipping");
         }
-    }
+    };
 
     return (
         <div>
@@ -97,7 +97,7 @@ const ContactInformation = observer((props) => {
                                 <Input
                                     placeholder=""
                                     onChange={(e)=> {
-                                        ContactInformationStore.ob.saveData.email =  e.target.value;
+                                        ContactInformationStore.setSaveData('email', e.target.value);
                                         handleInputEditing('email', e.target.value.length);
                                     }}
                                 />

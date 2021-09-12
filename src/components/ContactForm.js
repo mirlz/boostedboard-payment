@@ -1,5 +1,6 @@
 import React from 'react';   
-import {observer} from 'mobx-react';
+import { action } from 'mobx';
+import {observer} from 'mobx-react-lite';
 import CountriesStatesStore from '../stores/CountriesStatesStore';
 import { Row, Col, Form, Input, Checkbox, Select, Button } from 'antd';
 import { AsYouType } from 'libphonenumber-js';
@@ -15,16 +16,16 @@ const ContactForm = observer((props) => {
     const countryData = CountriesStatesStore.ob.countries;
     const store = props.store;
     
-    const handleInputEditing = (inputName, inputLength) => {
+    const handleInputEditing = action((inputName, inputLength) => {
         if(inputLength > 0) {
             store.setInputToEditing(inputName, true);
         }
         else {
             store.setInputToEditing(inputName, false);
         }
-    };
+    });
 
-    const handleCountryChange = (country) => { 
+    const handleCountryChange = action((country) => { 
         //load states list
         CountriesStatesStore.handleStateList(country);
         //update default state according to nation, reset zip code
@@ -40,13 +41,13 @@ const ContactForm = observer((props) => {
 
         //load tax rate again for default state
         let state = form.getFieldValue('contact[state]');
-        CountriesStatesStore.ob.onStateSelectChange = true;
+        CountriesStatesStore.handleStateSelectChange(true);
         CountriesStatesStore.handleStateChange(state, country);
-    }
+    });
 
-    const handleStateChange = (value) => { 
+    const handleStateChange = action((value) => { 
         let country = form.getFieldValue('contact[country]');
-        CountriesStatesStore.ob.onStateSelectChange = true;
+        CountriesStatesStore.handleStateSelectChange(true);
         CountriesStatesStore.handleStateChange(value, country);
         form.setFields({
             ['contact[zipcode]']: {             
@@ -54,9 +55,9 @@ const ContactForm = observer((props) => {
             }
         });
         inputEditArr.zipcode = false;
-    }
+    });
 
-    const validateZipcode = (rule, value, callback) => {
+    const validateZipcode = action((rule, value, callback) => {
         if(value.length <= 0) {
             callback("Enter a zip code")
         }
@@ -72,12 +73,12 @@ const ContactForm = observer((props) => {
         }
         callback();
         return;
-    };
+    });
 
-    const handlePhoneNumberInput = (number) => {  
+    const handlePhoneNumberInput = action((number) => {  
         let newnum = new AsYouType('US').input(number);
         return newnum;    
-    }
+    });
 
     return (
         <div>
@@ -99,10 +100,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action(e=> {
                                             fieldData.firstname = e.target.value;
                                             handleInputEditing('firstname', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -121,10 +122,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action(e=> {
                                             fieldData.lastname = e.target.value;
                                             handleInputEditing('lastname', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -138,10 +139,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action(e=> {
                                             fieldData.company = e.target.value;
                                             handleInputEditing('company', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -162,10 +163,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action(e=> {
                                             fieldData.address = e.target.value;
                                             handleInputEditing('address', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -179,10 +180,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action(e=> {
                                             fieldData.apartment = e.target.value;
                                             handleInputEditing('apartment', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -203,10 +204,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action(e=> {
                                             fieldData.city = e.target.value;
                                             handleInputEditing('city', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -220,9 +221,9 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Select
                                         filterOption={false}
-                                        onSelect={(country)=> {
+                                        onSelect={action(country=> {
                                             handleCountryChange(country);
-                                        }}
+                                        })}
                                     > 
                                     {Object.keys(countryData).map((country, key)=> {
                                         return <Option value={country} key={country}>{countryData[country].name}</Option>
@@ -238,9 +239,9 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Select
                                         filterOption={false}
-                                        onSelect={(e)=> {
+                                        onSelect={action(e=> {
                                             handleStateChange(e);
-                                        }}
+                                        })}
                                     > 
                                     {CountriesStatesStore.ob.activeStates.map(state => {
                                         return <Option key={state} value={state}>{state}</Option>
@@ -257,10 +258,10 @@ const ContactForm = observer((props) => {
                                 })(
                                     <Input
                                         placeholder=""
-                                        onChange={(e)=> {
+                                        onChange={action((e)=> {
                                             fieldData.zipcode = e.target.value;
                                             handleInputEditing('zipcode', e.target.value.length);
-                                        }}
+                                        })}
                                     />
                                 )}
                             </FormItem>
@@ -283,10 +284,10 @@ const ContactForm = observer((props) => {
                             })(
                                 <Input
                                     placeholder=""
-                                    onChange={(e)=> {
+                                    onChange={action(e=> {
                                         fieldData.phone = e.target.value;
                                         handleInputEditing('phone', e.target.value.length);
-                                    }}
+                                    })}
                                 />
                             )}
                         </FormItem>
